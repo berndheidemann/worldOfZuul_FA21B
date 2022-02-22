@@ -90,25 +90,25 @@ public class Room {
     }
 
     public String exitsToString() {
-        String exists = "";
+        StringBuilder exists = new StringBuilder();
         if (this.northExit != null) {
-            exists += "north ";
+            exists.append("north ");
         }
         if (this.eastExit != null) {
-            exists += "east ";
+            exists.append("east ");
         }
         if (this.southExit != null) {
-            exists += "south ";
+            exists.append("south ");
         }
         if (this.westExit != null) {
-            exists += "west ";
+            exists.append("west ");
         }
         if (this.upExit != null) {
-            exists += "up ";
+            exists.append("up ");
         }
         if (this.downExit != null) {
-            exists += "down ";
+            exists.append("down ");
         }
-        return exists;
+        return exists.toString();
     }
 }
