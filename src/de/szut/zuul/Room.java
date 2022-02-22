@@ -15,13 +15,13 @@ package de.szut.zuul;
  * @version 2016.02.29
  */
 public class Room {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public Room upExit;
-    public Room downExit;
+    private String description;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
+    private Room upExit;
+    private Room downExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -71,4 +71,44 @@ public class Room {
         return description;
     }
 
+    public Room getExit(String direction) {
+        switch (direction) {
+            case "north":
+                return northExit;
+            case "south":
+                return southExit;
+            case "east":
+                return eastExit;
+            case "west":
+                return westExit;
+            case "up":
+                return upExit;
+            case "down":
+                return downExit;
+        }
+        return null;
+    }
+
+    public String exitsToString() {
+        String exists = "";
+        if (this.northExit != null) {
+            exists += "north ";
+        }
+        if (this.eastExit != null) {
+            exists += "east ";
+        }
+        if (this.southExit != null) {
+            exists += "south ";
+        }
+        if (this.westExit != null) {
+            exists += "west ";
+        }
+        if (this.upExit != null) {
+            exists += "up ";
+        }
+        if (this.downExit != null) {
+            exists += "down ";
+        }
+        return exists;
+    }
 }

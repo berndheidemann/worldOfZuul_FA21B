@@ -149,24 +149,7 @@ public class Game {
 
         // Try to leave current room.
         Room nextRoom = null;
-        if (direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if (direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if (direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if (direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
-        if (direction.equals("up")) {
-            nextRoom = currentRoom.upExit;
-        }
-        if (direction.equals("down")) {
-            nextRoom = currentRoom.downExit;
-        }
+        nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -179,24 +162,7 @@ public class Game {
     private void printRoomInformation() {
         System.out.println("You are " + currentRoom.getDescription());
         System.out.print("Exits: ");
-        if (currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if (currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if (currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if (currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        if (currentRoom.upExit != null) {
-            System.out.print("up ");
-        }
-        if (currentRoom.downExit != null) {
-            System.out.print("down ");
-        }
+        System.out.println(currentRoom.exitsToString());
         System.out.println();
     }
 
