@@ -49,17 +49,31 @@ public class Game {
         basement = new Room("in the dark basement");
 
         // initialise room exits
-        marketsquare.setExits(tavern, templePyramid, null, sacrificialSite, null, null);
-        templePyramid.setExits(hut, null, null, marketsquare, sorcererChamber, basement);
-        tavern.setExits(null, hut, marketsquare, null, null, null);
-        sacrificialSite.setExits(null, marketsquare, null, null, null, cave);
-        hut.setExits(null, jungle, templePyramid, tavern, null, null);
-        jungle.setExits(null, null, null, hut, null, null);
-        secretPassage.setExits(null, null, null, cave, null, null);
-        cave.setExits(null, secretPassage, beach, null, sacrificialSite, null);
-        beach.setExits(cave, null, null, null, null, null);
-        sorcererChamber.setExits(null, null, null, null, null, templePyramid);
-        basement.setExits(null, null, null, secretPassage, templePyramid, null);
+        marketsquare.setExit("west", sacrificialSite);
+        marketsquare.setExit("north", tavern);
+        marketsquare.setExit("east", templePyramid);
+        templePyramid.setExit("west", marketsquare);
+        templePyramid.setExit("north", hut);
+        templePyramid.setExit("up", sorcererChamber);
+        templePyramid.setExit("down", basement);
+        tavern.setExit("south", marketsquare);
+        tavern.setExit("east", hut);
+        sacrificialSite.setExit("east", marketsquare);
+        sacrificialSite.setExit("down", cave);
+        hut.setExit("west", tavern);
+        hut.setExit("south", templePyramid);
+        hut.setExit("east", jungle);
+        jungle.setExit("west", hut);
+        secretPassage.setExit("west", cave);
+        secretPassage.setExit("east", basement);
+        cave.setExit("up", sacrificialSite);
+        cave.setExit("east", secretPassage);
+        cave.setExit("south", beach);
+        beach.setExit("north", cave);
+        sorcererChamber.setExit("down", templePyramid);
+        basement.setExit("up", templePyramid);
+        sorcererChamber.setExit("window", marketsquare);
+
 
         currentRoom = marketsquare;  // start game on marketsquare
     }
