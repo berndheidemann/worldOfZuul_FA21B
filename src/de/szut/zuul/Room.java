@@ -56,4 +56,9 @@ public class Room {
         }
         return exists.toString();
     }
+
+    public String getLongDescription() {
+        // return "You are " + description + "\nExits: " + exitsToString();
+        return String.format("You are %s\nExits: %s", description, exitsToString());
+    }
 }
