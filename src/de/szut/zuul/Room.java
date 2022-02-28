@@ -19,6 +19,7 @@ import java.util.HashMap;
 public class Room {
     private String description;
     private HashMap<String, Room> exits;
+    private HashMap<String, Item> items;
 
 
     /**
@@ -30,7 +31,12 @@ public class Room {
      */
     public Room(String description) {
         this.exits = new HashMap<>();
+        this.items = new HashMap<>();
         this.description = description;
+    }
+
+    public void putItem(Item item) {
+        this.items.put(item.getName(), item);
     }
 
 
@@ -57,8 +63,16 @@ public class Room {
         return exists.toString();
     }
 
+    public String itemsToString() {
+        StringBuilder itemsAsStr = new StringBuilder();
+        for (String key : this.items.keySet()) {
+            Item item = this.items.get(key);
+            itemsAsStr.append("- " + item.getName() + ", " + item.getDescription() + ", " + item.getWeight() + "\n");
+        }
+        return itemsAsStr.toString();
+    }
+
     public String getLongDescription() {
-        // return "You are " + description + "\nExits: " + exitsToString();
-        return String.format("You are %s\nExits: %s", description, exitsToString());
+        return String.format("You are %s\nExits: %s\nItems in this room:\n%s", description, exitsToString(), itemsToString());
     }
 }

@@ -74,8 +74,26 @@ public class Game {
         basement.setExit("up", templePyramid);
         sorcererChamber.setExit("window", marketsquare);
 
+        Item bow = new Item("bow", "bow from wood", 0.5);
+        Item treasure = new Item("treasure", "treasure chest with coins", 7.5);
+        Item arrows = new Item("arrows", "a quiver with various arrows", 1.0);
+        Item herb = new Item("herb", "healing herb", 0.5);
+        Item cacao = new Item("cacao", "a tiny cacao tree", 5.0);
+        Item knife = new Item("knife", "a big sharp knife", 1);
+        Item spear = new Item("spear", "a spear with accompanying slingshot", 5.0);
+        Item food = new Item("food", "a plate of hearty meat and maize porridge", 0.5);
+        Item headdress = new Item("headdress", "a very pretty headdress", 1.0);
 
-        currentRoom = marketsquare;  // start game on marketsquare
+        marketsquare.putItem(bow);
+        cave.putItem(treasure);
+        sorcererChamber.putItem(arrows);
+        jungle.putItem(herb);
+        jungle.putItem(cacao);
+        sacrificialSite.putItem(knife);
+        hut.putItem(spear);
+        tavern.putItem(food);
+        cave.putItem(headdress);
+        currentRoom = marketsquare;
     }
 
     /**
