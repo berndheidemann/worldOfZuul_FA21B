@@ -19,12 +19,13 @@ package de.szut.zuul;
 
 public class Game {
     private Parser parser;
-    private Room currentRoom;
+    private Player player;
 
     /**
      * Create the game and initialise its internal map.
      */
     public Game() {
+        this.player = new Player();
         createRooms();
         parser = new Parser();
     }
@@ -93,7 +94,7 @@ public class Game {
         hut.putItem(spear);
         tavern.putItem(food);
         cave.putItem(headdress);
-        currentRoom = marketsquare;
+        this.player.goTo(marketsquare);
     }
 
     /**
@@ -148,6 +149,10 @@ public class Game {
             wantToQuit = quit(command);
         } else if (commandWord.equals("look")) {
             look();
+        } else if (commandWord.equals("take")) {
+            takeItem(command);
+        } else if (commandWord.equals("drop")) {
+            dropItem(command);
         }
 
         return wantToQuit;
@@ -183,22 +188,24 @@ public class Game {
 
         // Try to leave current room.
         Room nextRoom = null;
-        nextRoom = currentRoom.getExit(direction);
+        nextRoom = this.player.getCurrentRoom().getExit(direction);
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
         } else {
-            currentRoom = nextRoom;
+            this.player.goTo(nextRoom);
             printRoomInformation();
         }
     }
 
     private void printRoomInformation() {
-        System.out.println(currentRoom.getLongDescription());
+        Player p = this.player;
+        Room r = p.getCurrentRoom();
+        System.out.println(r.getLongDescription());
     }
 
     private void look() {
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(this.player.getCurrentRoom().getLongDescription());
     }
 
     /**
@@ -215,4 +222,38 @@ public class Game {
             return true;  // signal that we want to quit
         }
     }
+
+    private void takeItem(Command command) {
+        if (command.hasSecondWord()) {
+            String itemName = command.getSecondWord();
+            Item item = this.player.getCurrentRoom().removeItem(itemName);
+            if (item == null) {
+                System.out.println("Item doesnt exist");
+            } else {
+                if (!this.player.takeItem(item)) {
+                    this.player.getCurrentRoom().putItem(item);
+                    System.out.println("Item too heavy");
+                } else {
+                    System.out.println(this.player.showStatus());
+                    this.printRoomInformation();
+                }
+
+            }
+        }
+    }
+
+    private void dropItem(Command command) {
+        if (command.hasSecondWord()) {
+            String itemName = command.getSecondWord();
+            Item item = this.player.dropItem(itemName);
+            if (item == null) {
+                System.out.println("Item doesnt exist");
+            } else {
+                this.player.getCurrentRoom().putItem(item);
+                System.out.println(this.player.showStatus());
+                this.printRoomInformation();
+            }
+        }
+    }
 }
+

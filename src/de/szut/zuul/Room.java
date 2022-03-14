@@ -75,4 +75,8 @@ public class Room {
     public String getLongDescription() {
         return String.format("You are %s\nExits: %s\nItems in this room:\n%s", description, exitsToString(), itemsToString());
     }
+
+    public Item removeItem(String name) {
+        return this.items.remove(name);
+    }
 }
