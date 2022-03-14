@@ -1,5 +1,7 @@
 package de.szut.zuul;
 
+import de.szut.zuul.items.Item;
+
 import java.util.HashMap;
 
 /**

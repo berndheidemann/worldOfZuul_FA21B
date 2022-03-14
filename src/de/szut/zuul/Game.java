@@ -1,5 +1,10 @@
 package de.szut.zuul;
 
+import de.szut.zuul.items.EatableItem;
+import de.szut.zuul.items.Item;
+import de.szut.zuul.items.LoosingAllItemsEatableItem;
+import de.szut.zuul.items.ModifyingWeightEatableItem;
+
 /**
  * This class is the main class of the "World of Zuul" application.
  * "World of Zuul" is a very simple, text based adventure game.  Users
@@ -94,6 +99,11 @@ public class Game {
         hut.putItem(spear);
         tavern.putItem(food);
         cave.putItem(headdress);
+
+        marketsquare.putItem(new ModifyingWeightEatableItem("muffin", "a delicious blue muffin", 1.2, 1.2));
+        marketsquare.putItem(new LoosingAllItemsEatableItem("donut", "a void donut", 0.0));
+
+
         this.player.goTo(marketsquare);
     }
 
@@ -153,9 +163,30 @@ public class Game {
             takeItem(command);
         } else if (commandWord.equals("drop")) {
             dropItem(command);
+        } else if (commandWord.equals("eat")) {
+            eat(command);
+        } else if (commandWord.equals("status")) {
+            status();
         }
 
         return wantToQuit;
+    }
+
+    private void status() {
+        System.out.println(this.player.showStatus());
+    }
+
+    private void eat(Command command) {
+        if (command.hasSecondWord()) {
+            if (player.eat(command.getSecondWord())) {
+                System.out.println(this.player.showStatus());
+            } else {
+                System.out.println("This Item doesnt exist or isn't eatable");
+            }
+        } else {
+            System.out.println("eat what?");
+        }
+
     }
 
     // implementations of user commands:
@@ -239,13 +270,15 @@ public class Game {
                 }
 
             }
+        } else {
+            System.out.println("Which Item?");
         }
     }
 
     private void dropItem(Command command) {
         if (command.hasSecondWord()) {
             String itemName = command.getSecondWord();
-            Item item = this.player.dropItem(itemName);
+            Item item = this.player.getAndRemoveItemFromInventory(itemName);
             if (item == null) {
                 System.out.println("Item doesnt exist");
             } else {
@@ -253,6 +286,8 @@ public class Game {
                 System.out.println(this.player.showStatus());
                 this.printRoomInformation();
             }
+        } else {
+            System.out.println("Which Item?");
         }
     }
 }
