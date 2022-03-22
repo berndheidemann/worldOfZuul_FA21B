@@ -257,10 +257,9 @@ public class Game {
     private void takeItem(Command command) {
         if (command.hasSecondWord()) {
             String itemName = command.getSecondWord();
-            Item item = this.player.getCurrentRoom().removeItem(itemName);
-            if (item == null) {
-                System.out.println("Item doesnt exist");
-            } else {
+            try {
+                Item item = this.player.getCurrentRoom().removeItem(itemName);
+
                 if (!this.player.takeItem(item)) {
                     this.player.getCurrentRoom().putItem(item);
                     System.out.println("Item too heavy");
@@ -268,12 +267,16 @@ public class Game {
                     System.out.println(this.player.showStatus());
                     this.printRoomInformation();
                 }
-
+            } catch (ItemNotFoundException e) {
+                System.out.println(e.getMessage());
             }
+
+
         } else {
             System.out.println("Which Item?");
         }
     }
+
 
     private void dropItem(Command command) {
         if (command.hasSecondWord()) {

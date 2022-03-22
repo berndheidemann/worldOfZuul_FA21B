@@ -1,6 +1,5 @@
 package de.szut.zuul.items;
 
-import java.util.Collection;
 
 public class Item {
 
@@ -25,6 +24,4 @@ public class Item {
     public String getName() {
         return this.name;
     }
-
-
 }

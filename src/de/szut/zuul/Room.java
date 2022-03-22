@@ -78,7 +78,10 @@ public class Room {
         return String.format("You are %s\nExits: %s\nItems in this room:\n%s", description, exitsToString(), itemsToString());
     }
 
-    public Item removeItem(String name) {
+    public Item removeItem(String name) throws ItemNotFoundException {
+        if (this.items.get(name) == null) {
+            throw new ItemNotFoundException();
+        }
         return this.items.remove(name);
     }
 }
